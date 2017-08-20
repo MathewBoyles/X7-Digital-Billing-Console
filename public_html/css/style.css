@@ -1,0 +1,120 @@
+body {
+  background: #f1f5f9; }
+
+x7-data {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important; }
+
+.navbar {
+  border-color: #fafbfc;
+  background: #fafbfc;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.2); }
+  .navbar > .navbar-brand > img {
+    height: 35px; }
+
+#page {
+  margin-top: 61px; }
+  #page .sidebar {
+    background: #fafbfc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.2);
+    padding: 0; }
+    #page .sidebar .nav-link {
+      color: #333;
+      cursor: pointer;
+      border-radius: 0;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e1e7ed; }
+      #page .sidebar .nav-link.active {
+        color: #fff;
+        background: #ffa74a; }
+    @media (min-width: 576px) {
+      #page .sidebar {
+        height: 100vh;
+        position: fixed; } }
+  #page main {
+    min-height: calc(100vh - 61px); }
+    #page main .card-main {
+      box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+      margin-bottom: 15px; }
+      #page main .card-main table {
+        margin-bottom: 0; }
+        #page main .card-main table thead tr th:first-child {
+          width: 70%; }
+        #page main .card-main table thead tr th:last-child {
+          width: 10%; }
+        #page main .card-main table tbody tr {
+          color: #3297d3; }
+          #page main .card-main table tbody tr .badge.badge-line {
+            background: none;
+            border: 1px solid currentColor;
+            color: inherit;
+            float: right;
+            margin-left: 5px;
+            margin-top: 2px;
+            padding: 0.4em 0.7em;
+            text-transform: uppercase; }
+          #page main .card-main table tbody tr.is-link, #page main .card-main table tbody tr[data-href] {
+            cursor: pointer; }
+            #page main .card-main table tbody tr.is-link:hover, #page main .card-main table tbody tr[data-href]:hover {
+              background: #f5f5f5;
+              color: #333; }
+    #page main .card > .card-header.card-more {
+      line-height: 29px; }
+    #page main #login_form {
+      margin: 0 auto;
+      max-width: 500px;
+      width: 100%; }
+      #page main #login_form > .logo-block {
+        color: #909090;
+        text-align: center;
+        margin: 0 0 50px; }
+        #page main #login_form > .logo-block a {
+          color: #909090;
+          text-decoration: none; }
+        #page main #login_form > .logo-block img {
+          max-width: 200px; }
+      #page main #login_form > .card {
+        border-radius: 0;
+        margin-bottom: 30px; }
+        #page main #login_form > .card > .card-body > form > .forgot-password {
+          float: right;
+          margin-top: 11px; }
+  @media (max-width: 575px) {
+    #page {
+      margin-top: 79px; }
+      #page main {
+        min-height: unset; } }
+
+.table-fixed {
+  table-layout: fixed; }
+
+#add_card_alert {
+  display: none; }
+
+body[data-pageid="card"] nav,
+body[data-pageid="login"] nav,
+body[data-pageid="password"] nav {
+  display: none; }
+
+@media print {
+  .navbar,
+  .sidebar {
+    display: none; }
+
+  body {
+    background: none; }
+
+  #page {
+    margin: 0; }
+    #page main {
+      flex: unset;
+      left: 0;
+      margin: 0 !important;
+      max-width: unset;
+      width: 100vw !important; }
+      #page main .card-main {
+        box-shadow: none; } }
+
+/*# sourceMappingURL=style.css.map */

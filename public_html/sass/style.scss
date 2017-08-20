@@ -1,0 +1,193 @@
+body {
+  background: #f1f5f9;
+}
+
+x7-data {
+  display: none!important;
+  height: 0!important;
+  width: 0!important;
+  overflow: hidden!important;
+}
+
+.navbar {
+  border-color: #fafbfc;
+  background: #fafbfc;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.2);
+
+  > .navbar-brand {
+    > img {
+      height: 35px;
+    }
+  }
+}
+
+#page {
+  margin-top: 61px;
+
+  .sidebar {
+    background: #fafbfc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 2px rgba(0, 0, 0, 0.2);
+    padding: 0;
+
+    .nav-link {
+      color: #333;
+      cursor: pointer;
+      border-radius: 0;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e1e7ed;
+
+      &.active {
+        color: #fff;
+        background: #ffa74a;
+      }
+    }
+    @media (min-width: 576px) {
+      height: 100vh;
+      position: fixed;
+    }
+  }
+
+  main {
+    min-height: calc(100vh - 61px);
+
+    .card-main {
+      box-shadow: 0 7px 14px 0 rgba(50,50,93,.1), 0 3px 6px 0 rgba(0,0,0,.07);
+      margin-bottom: 15px;
+
+      table {
+        margin-bottom: 0;
+
+        thead {
+          tr {
+            th {
+              &:first-child {
+                width: 70%;
+              }
+
+              &:last-child {
+                width: 10%;
+              }
+            }
+          }
+        }
+
+        tbody {
+          tr {
+            color: #3297d3;
+
+            .badge.badge-line {
+              background: none;
+              border: 1px solid currentColor;
+              color: inherit;
+              float: right;
+              margin-left: 5px;
+              margin-top: 2px;
+              padding: 0.4em 0.7em;
+              text-transform: uppercase;
+            }
+
+            &.is-link,
+            &[data-href] {
+              cursor: pointer;
+
+              &:hover {
+                background: #f5f5f5;
+                color: #333;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .card {
+      > .card-header.card-more {
+        line-height: 29px;
+      }
+    }
+
+    #login_form {
+      margin: 0 auto;
+      max-width: 500px;
+      width: 100%;
+
+      > .logo-block {
+        color: #909090;
+        text-align: center;
+        margin: 0 0 50px;
+
+        a {
+          color: #909090;
+          text-decoration: none;
+        }
+
+        img {
+          max-width: 200px;
+        }
+      }
+
+      > .card {
+        border-radius: 0;
+        margin-bottom: 30px;
+
+        > .card-body {
+          > form {
+            > .forgot-password {
+              float: right;
+              margin-top: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 575px) {
+    margin-top: 79px;
+
+    main {
+      min-height: unset;
+    }
+  }
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
+#add_card_alert {
+  display: none;
+}
+
+body[data-pageid="card"],
+body[data-pageid="login"],
+body[data-pageid="password"] {
+  nav {
+    display: none;
+  }
+}
+@media print {
+  .navbar,
+  .sidebar {
+    display: none;
+  }
+
+  body {
+    background: none;
+  }
+
+  #page {
+    margin: 0;
+
+    main {
+      flex: unset;
+      left: 0;
+      margin: 0 !important;
+      max-width: unset;
+      width: 100vw!important;
+
+      .card-main {
+        box-shadow: none;
+      }
+    }
+  }
+}

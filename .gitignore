@@ -1,1 +1,4 @@
 /node_modules/
+/server_private/config.php
+/server_private/stripe-php-5.1.3/
+/server_private/downloads/

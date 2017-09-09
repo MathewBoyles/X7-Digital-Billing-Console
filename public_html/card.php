@@ -22,10 +22,10 @@
     else {
       $customer = $me->stripe();
       $customer->sources->create(array("source" => $_POST["token"]));
+      $return_data = array("status" => "success", "message" => "success");
 
       if(!$me->info["account_ready"]) {
         $link->query("UPDATE `".$config["mysql"]["prefix"]."users` SET `account_ready` = '".time()."' WHERE `id` = '".$me->info["id"]."'");
-        $return_data = array("status"=>"success","message"=>"success");
 
         $headers = array();
         $headers[] = "MIME-Version: 1.0";

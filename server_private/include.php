@@ -26,6 +26,17 @@
       include "tmpl/" . $tmpl . ".php";
     }
 
+    public function email_tmpl($tmpl, $data = array()){
+      GLOBAL $config, $app, $me;
+
+      ob_start();
+      include "emails/" . $tmpl . ".php";
+      $email_tmpl = ob_get_clean();
+      ob_flush();
+
+      return $email_tmpl;
+    }
+
     public function format_size($size){
       $mod = 1024;
       $units = explode(' ','B KB MB GB TB PB');

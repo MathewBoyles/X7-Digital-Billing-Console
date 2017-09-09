@@ -23,17 +23,19 @@
       $customer = $me->stripe();
       $customer->sources->create(array("source" => $_POST["token"]));
 
-      $link->query("UPDATE `".$config["mysql"]["prefix"]."users` SET `account_ready` = '".time()."' WHERE `id` = '".$me->info["id"]."'");
-      $return_data = array("status"=>"success","message"=>"success");
+      if(!$me->info["account_ready"]) {
+        $link->query("UPDATE `".$config["mysql"]["prefix"]."users` SET `account_ready` = '".time()."' WHERE `id` = '".$me->info["id"]."'");
+        $return_data = array("status"=>"success","message"=>"success");
 
-      $headers = array();
-      $headers[] = "MIME-Version: 1.0";
-      $headers[] = "Content-type: text/html; charset=iso-8859-1";
-      $headers[] = "To: ".$config["rep"]["name"]." <".$config["rep"]["email"].">";
-      $headers[] = "From: X7 Digital <admin@x7digital.com>";
+        $headers = array();
+        $headers[] = "MIME-Version: 1.0";
+        $headers[] = "Content-type: text/html; charset=iso-8859-1";
+        $headers[] = "To: ".$config["rep"]["name"]." <".$config["rep"]["email"].">";
+        $headers[] = "From: X7 Digital <admin@x7digital.com>";
 
-      $email_code = $app->email_tmpl("account-activated", array("user" => $me));
-      mail($config["rep"]["email"], "X7 Digital Billing Console - Account Activated", $email_code, implode("\r\n", $headers));
+        $email_code = $app->email_tmpl("account-activated", array("user" => $me));
+        mail($config["rep"]["email"], "X7 Digital Billing Console - Account Activated", $email_code, implode("\r\n", $headers));
+      }
     }
 
     die(json_encode($return_data));

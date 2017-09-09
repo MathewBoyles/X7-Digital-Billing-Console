@@ -31,7 +31,9 @@
       $headers[] = "Content-type: text/html; charset=iso-8859-1";
       $headers[] = "To: ".$config["rep"]["name"]." <".$config["rep"]["email"].">";
       $headers[] = "From: X7 Digital <admin@x7digital.com>";
-      mail($config["rep"]["email"], "X7 Digital Billing Console - Account Activated", "<strong>" . $me->info["name"] . " (" . $me->info["email"] . ")</strong> activated their X7 Digital Billing Console account.", implode("\r\n", $headers));
+
+      $email_code = $app->email_tmpl("account-activated", array("user" => $me));
+      mail($config["rep"]["email"], "X7 Digital Billing Console - Account Activated", $email_code, implode("\r\n", $headers));
     }
 
     die(json_encode($return_data));

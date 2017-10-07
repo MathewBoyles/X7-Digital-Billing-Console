@@ -19,6 +19,11 @@
           $view_payment = true;
           $payment = $item;
 
+          if(isset($_GET["print"])) {
+            $app->tmpl("modules/payment", $payment);
+            die;
+          }
+
           if(isset($_POST["action"]) && isset($_POST["card"]) && isset($_POST["password"])) {
             if($_POST["action"] == "pay") {
               if($config["password_verify"]($_POST["password"], $me->info["password"])) {
@@ -194,7 +199,7 @@
 
   <div class="card card-main d-print-none">
     <div class="card-body text-right">
-      <button type="button" class="btn btn-outline-secondary" onclick="window.print()">Print</button>
+      <a href="/payments?id=<?=$payment["id"];?>&print" class="btn btn-outline-secondary">Print</a>
     </div>
   </div>
 <?PHP endif; if($view_payment === "error"): ?>

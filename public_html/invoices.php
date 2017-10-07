@@ -16,6 +16,12 @@
         if($item["id"] == $_GET["id"]) {
           $view_invoice = true;
           $invoice = $item;
+
+          if(isset($_GET["print"])) {
+            $app->tmpl("modules/invoice", $invoice);
+            die;
+          }
+
           break;
         }
       endforeach;
@@ -96,7 +102,7 @@
 
   <div class="card card-main d-print-none">
     <div class="card-body text-right">
-      <button type="button" class="btn btn-outline-secondary" onclick="window.print()">Print</button>
+      <a href="/invoices?id=<?=$invoice["id"];?>&print" class="btn btn-outline-secondary">Print</a>
     </div>
   </div>
 <?PHP endif; if($view_invoice === "error"): ?>

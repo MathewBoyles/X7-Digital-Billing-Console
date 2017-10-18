@@ -61,8 +61,10 @@
         $validate_user = $link->query("SELECT * FROM `".$config["mysql"]["prefix"]."users` WHERE `login_id` = '".$_SESSION["user_id"]."'");
         if($validate_user->num_rows > 0):
           $validate_user_info = mysqli_fetch_array($validate_user, MYSQLI_ASSOC);
-          if($validate_user_info["account_type"] == "admin" && isset($_SESSION["user_as"])) $me = new USER($_SESSION["user_as"]?$_SESSION["user_as"]:$validate_user_info["id"]);
-          else $me = new USER($validate_user_info["id"]);
+          if($validate_user_info["account_type"] == "admin" && isset($_SESSION["user_as"])):
+            if($_SESSION["user_as"]) $me = new USER($_SESSION["user_as"], $validate_user_info["id"]);
+          endif;
+          if(!$me) $me = new USER($validate_user_info["id"]);
           $validate_user->close();
         else:
           unset($_SESSION["user_id"]);
@@ -137,11 +139,12 @@
       return $cards_array["data"];
     }
 
-    public function __construct($uid) {
+    public function __construct($uid, $uid_as = false) {
       GLOBAL $link, $config;
 
       $this->uid = $uid;
       $this->downloads_limit = 500 * 1048576;
+      $this->as = $uid_as;
 
       $user_info = $link->query("SELECT * FROM `".$config["mysql"]["prefix"]."users` WHERE `id` = '".$uid."'");
       $this->info = $user_info->fetch_array();

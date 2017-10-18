@@ -15,27 +15,27 @@
     if($_GET["id"]):
       $view_payment = "error";
       foreach($payments["items"] as $item):
-        if($item["id"] == $_GET["id"]) {
+        if($item["id"] == $_GET["id"]):
           $view_payment = true;
           $payment = $item;
 
-          if(isset($_GET["print"])) {
+          if(isset($_GET["print"])):
             $app->tmpl("modules/payment", $payment);
             die;
-          }
+          endif;
 
-          if(isset($_POST["action"]) && isset($_POST["card"]) && isset($_POST["password"])) {
-            if($_POST["action"] == "pay") {
-              if($config["password_verify"]($_POST["password"], $me->info["password"])) {
+          if(isset($_POST["action"]) && isset($_POST["card"]) && isset($_POST["password"])):
+            if($_POST["action"] == "pay"):
+              if($config["password_verify"]($_POST["password"], $me->info["password"])):
                 $cards = $me->cards();
                 $okay_card = false;
-                foreach ($cards as $card) {
-                  if($_POST["card"] == $card["id"]) {
+                foreach ($cards as $card):
+                  if($_POST["card"] == $card["id"]):
                     $okay_card = $card["id"];
                     break;
-                  }
-                }
-                if($okay_card) {
+                  endif;
+                endforeach;
+                if($okay_card):
                   $stripe_id = \Stripe\Charge::create(array(
                     "amount" => $payment["amount"],
                     "currency" => "nzd",
@@ -50,13 +50,13 @@
                   $link->query("UPDATE `".$config["mysql"]["prefix"]."invoices` SET `paid` = '".$payment["paid"]."', `stripe_id` = '".$payment["stripe_id"]."' WHERE `id` = '".$payment["id"]."'");
 
                   $show_msg = array("success", "Payment successful.");
-                } else $show_msg = array("danger", "An error occurred. Payment not authorized.");
-              } else $show_msg = array("danger", "Invalid password. Payment not authorized.");
-            }
-          }
+                else: $show_msg = array("danger", "An error occurred. Payment not authorized."); endif;
+              else: $show_msg = array("danger", "Invalid password. Payment not authorized."); endif;
+            endif;
+          endif;
 
           break;
-        }
+        endif;
       endforeach;
     endif;
   endif;

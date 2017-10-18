@@ -14,10 +14,10 @@
     <div class="container-fluid" id="page">
       <div class="row">
 
-<?PHP if(ACTIVE_NAV === "DISABLED") { ?>
+<?PHP if(ACTIVE_NAV === "DISABLED"): ?>
         <main class="col-sm-12 ml-sm-auto col-md-12 pt-3" role="main">
-<?PHP }else { ?>
+<?PHP else: ?>
 <?=$app->tmpl("_sidebar"); ?>
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-<?PHP } ?>
+<?PHP endif; ?>

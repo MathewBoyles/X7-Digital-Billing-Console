@@ -6,25 +6,25 @@
 
   $app->login_required();
 
-  if($me->info["account_ready"]){
+  if($me->info["account_ready"]):
     $cards = $me->cards();
-    if(count($cards) >= 5){
+    if(count($cards) >= 5):
       header("location: /settings?msg=cards.max");
       exit;
-    }
-  }
+    endif;
+  endif;
 
-  if(isset($_POST["action"]) && isset($_POST["password"]) && isset($_POST["token"])) {
+  if(isset($_POST["action"]) && isset($_POST["password"]) && isset($_POST["token"])):
     header("Content-Type: text/json");
     $return_data = array("status" => "error", "message" => "An error occurred.");
 
-    if(!$config["password_verify"]($_POST["password"], $me->info["password"])) $return_data["message"] = "Invalid password.";
-    else {
+    if(!$config["password_verify"]($_POST["password"], $me->info["password"])): $return_data["message"] = "Invalid password.";
+    else:
       $customer = $me->stripe();
       $customer->sources->create(array("source" => $_POST["token"]));
       $return_data = array("status" => "success", "message" => "success");
 
-      if(!$me->info["account_ready"]) {
+      if(!$me->info["account_ready"]):
         $link->query("UPDATE `".$config["mysql"]["prefix"]."users` SET `account_ready` = '".time()."' WHERE `id` = '".$me->info["id"]."'");
 
         $headers = array();
@@ -35,11 +35,11 @@
 
         $email_code = $app->email_tmpl("account-activated", array("user" => $me));
         mail($config["rep"]["email"], "X7 Digital Billing Console - Account Activated", $email_code, implode("\r\n", $headers));
-      }
-    }
+      endif;
+    endif;
 
     die(json_encode($return_data));
-  }
+  endif;
 
   $app->tmpl("top"); ?>
 
@@ -94,9 +94,9 @@
             <div class="col-sm-6">
               <select class="form-control" name="cardexpiry_year" required>
                 <option selected disabled>Select year</option>
-<?PHP for($i=date('Y');$i<=(date('Y')+20);$i++){ ?>
+<?PHP for($i=date('Y');$i<=(date('Y')+20);$i++): ?>
                 <option value="<?=$i;?>"><?=$i;?></option>
-<?PHP } ?>
+<?PHP endfor; ?>
               </select>
             </div>
           </div>
@@ -126,13 +126,13 @@
     </div>
   </div>
 
-<?PHP if(!$me->info["account_ready"]){ ?>
+<?PHP if(!$me->info["account_ready"]): ?>
   <div class="card card-main">
     <div class="card-body text-sm">
       You will <strong>not</strong> yet be charged. You will be able to view and authorize payments after activation.
     </div>
   </div>
-<?PHP } ?>
+<?PHP endif; ?>
 </div>
 
 <?PHP

@@ -4,36 +4,36 @@
   define("ACTIVE_NAV", "DISABLED");
   require("../server_private/include.php");
 
-  if($me !== false) {
+  if($me !== false):
     header("location: /");
     exit;
-  }
+  endif;
 
-  if(isset($_POST["email"]) && isset($_POST["password"])) {
+  if(isset($_POST["email"]) && isset($_POST["password"])):
     $login_success = false;
 
-    if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+    if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)):
       $validate_user = $link->query("SELECT * FROM `".$config["mysql"]["prefix"]."users` WHERE `email` = '".$_POST["email"]."'");
-      if($validate_user->num_rows > 0){
+      if($validate_user->num_rows > 0):
         $validate_user_info = mysqli_fetch_array($validate_user, MYSQLI_ASSOC);
 
-        if($config["password_verify"]($_POST["password"], $validate_user_info["password"])) {
-          if(!$validate_user_info["has_access"]) {
+        if($config["password_verify"]($_POST["password"], $validate_user_info["password"])):
+          if(!$validate_user_info["has_access"]):
             header("location: /login?msg=disabled");
             exit;
-          }
+          endif;
 
           $login_success = true;
 
           $_SESSION["user_id"] = $validate_user_info["login_id"];
           $_SESSION["user_as"] = false;
-        }
-      }
-    }
+        endif;
+      endif;
+    endif;
 
     header("location: /".($login_success?"":"login?msg=error"));
     exit;
-  }
+  endif;
 
   $messages = array(
     "loggedout" => array(
@@ -60,14 +60,14 @@
     </a>
   </div>
 
-<?PHP if(isset($_GET["msg"]) && isset($messages[$_GET["msg"]])) { ?>
+<?PHP if(isset($_GET["msg"]) && isset($messages[$_GET["msg"]])): ?>
   <div class="alert alert-<?=$messages[$_GET["msg"]][0];?> alert-dismissible fade show card-main" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     <?=$messages[$_GET["msg"]][1];?>
   </div>
-<?PHP } ?>
+<?PHP endif; ?>
 
   <div class="card card-main">
     <div class="card-body">

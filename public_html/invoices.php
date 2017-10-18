@@ -13,17 +13,17 @@
     if($_GET["id"]):
       $view_invoice = "error";
       foreach($invoices as $item):
-        if($item["id"] == $_GET["id"]) {
+        if($item["id"] == $_GET["id"]):
           $view_invoice = true;
           $invoice = $item;
 
-          if(isset($_GET["print"])) {
+          if(isset($_GET["print"])):
             $app->tmpl("modules/invoice", $invoice);
             die;
-          }
+          endif;
 
           break;
-        }
+        endif;
       endforeach;
     endif;
   endif;
@@ -81,7 +81,7 @@
         <tr>
           <td class="text-right text-muted">Subtotal: <strong>$<?=number_format($invoice["subtotal"]/100, 2);?></strong></td>
         </tr>
-<?PHP if($invoice["discount"]) { ?>
+<?PHP if($invoice["discount"]): ?>
         <tr>
           <td class="text-right text-muted">Discount: <strong>-$<?=
             number_format(
@@ -92,7 +92,7 @@
             else echo "$" . number_format($invoice["discount"]["coupon"]["amount_off"]/100, 2);
           ?> off</small></td>
         </tr>
-<?PHP } ?>
+<?PHP endif; ?>
         <tr>
           <td class="text-right text-muted">Total: <strong>$<?=number_format($invoice["total"]/100, 2);?></strong></td>
         </tr>

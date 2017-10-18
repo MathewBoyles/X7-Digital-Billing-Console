@@ -4,29 +4,29 @@
   \Stripe\Stripe::setApiKey($config["stripe"]["secret"]);
 
   class APP {
-    public function login_required(){
+    public function login_required() {
       GLOBAL $me;
-      if($me === false) {
+      if($me === false):
         header("location: /login");
         exit;
-      }
-      if($me->info["password_temp"] && PAGE_ID !== "password") {
+      endif;
+      if($me->info["password_temp"] && PAGE_ID !== "password"):
         header("location: /password");
         exit;
-      }
-      if(!$me->info["account_ready"] && !$me->info["password_temp"] && PAGE_ID !== "card") {
+      endif;
+      if(!$me->info["account_ready"] && !$me->info["password_temp"] && PAGE_ID !== "card"):
         header("location: /card");
         exit;
-      }
+      endif;
     }
 
-    public function tmpl($tmpl, $data = array()){
+    public function tmpl($tmpl, $data = array()) {
       GLOBAL $config, $app, $me;
 
       include "tmpl/" . $tmpl . ".php";
     }
 
-    public function email_tmpl($tmpl, $data = array()){
+    public function email_tmpl($tmpl, $data = array()) {
       GLOBAL $config, $app, $me;
 
       ob_start();
@@ -37,7 +37,7 @@
       return $email_tmpl;
     }
 
-    public function format_size($size){
+    public function format_size($size) {
       $mod = 1024;
       $units = explode(' ','B KB MB GB TB PB');
       for ($i = 0; $size >= $mod; $i++) {
@@ -46,7 +46,7 @@
       return round($size, 2) . ' ' . $units[$i];
     }
 
-    public function password_security($password){
+    public function password_security($password) {
       $has_error = false;
       if (strlen($password) < 8) $has_error = true;
       if (!preg_match("#[0-9]+#", $password)) $has_error = true;
@@ -54,35 +54,35 @@
       return !$has_error;
     }
 
-    public function __construct(){
+    public function __construct() {
       GLOBAL $me, $link, $config;
 
-      if(isset($_SESSION["user_id"])) {
+      if(isset($_SESSION["user_id"])):
         $validate_user = $link->query("SELECT * FROM `".$config["mysql"]["prefix"]."users` WHERE `login_id` = '".$_SESSION["user_id"]."'");
-        if($validate_user->num_rows > 0){
+        if($validate_user->num_rows > 0):
           $validate_user_info = mysqli_fetch_array($validate_user, MYSQLI_ASSOC);
           if($validate_user_info["account_type"] == "admin" && isset($_SESSION["user_as"])) $me = new USER($_SESSION["user_as"]?$_SESSION["user_as"]:$validate_user_info["id"]);
           else $me = new USER($validate_user_info["id"]);
           $validate_user->close();
-        } else {
+        else:
           unset($_SESSION["user_id"]);
           unset($_SESSION["user_as"]);
-        }
-      }
+        endif;
+      endif;
     }
 
-    public function end(){
+    public function end() {
       GLOBAL $link;
       $link->close();
     }
   }
 
   class USER {
-    public function stripe(){
+    public function stripe() {
       return \Stripe\Customer::retrieve($this->info["customer_id"]);
     }
 
-    public function payments(){
+    public function payments() {
       GLOBAL $link, $config;
 
       $return_array = array(
@@ -93,23 +93,23 @@
         "overdue" => 0
       );
 
-      if($payments_query = $link->query("SELECT * FROM `".$config["mysql"]["prefix"]."invoices` WHERE `user` = '".$this->uid."' ORDER BY `paid` ASC, `id` DESC")) {
-        while($item = mysqli_fetch_array($payments_query, MYSQLI_ASSOC)) {
-          if(!$item["paid"]) {
+      if($payments_query = $link->query("SELECT * FROM `".$config["mysql"]["prefix"]."invoices` WHERE `user` = '".$this->uid."' ORDER BY `paid` ASC, `id` DESC")):
+        while($item = mysqli_fetch_array($payments_query, MYSQLI_ASSOC)):
+          if(!$item["paid"]):
             $return_array["owing"] += $item["amount"];
             $return_array["pending"]++;
             if($item["due"] < time()) $return_array["overdue"]++;
-          }
+          endif;
           $return_array["total"]++;
           array_push($return_array["items"], $item);
-        }
+        endwhile;
         $payments_query->close();
-      }
+      endif;
 
       return $return_array;
     }
 
-    public function subscriptions($data = array()){
+    public function subscriptions($data = array()) {
       $subscriptions_data = array(
         "customer" => $this->info["customer_id"],
         "limit" => 100,
@@ -119,7 +119,7 @@
       return $subscriptions_array["data"];
     }
 
-    public function invoices($data = array()){
+    public function invoices($data = array()) {
       $invoices_data = array(
         "customer" => $this->info["customer_id"],
         "limit" => 100
@@ -128,7 +128,7 @@
       return $invoices_array["data"];
     }
 
-    public function cards($data = array()){
+    public function cards($data = array()) {
       $cards_data = array(
         "object" => "card",
         "limit" => 100

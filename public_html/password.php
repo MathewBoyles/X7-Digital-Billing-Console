@@ -6,7 +6,7 @@
 
   $app->login_required();
 
-  if(isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"])) {
+  if(isset($_POST["password"]) && isset($_POST["new_password"]) && isset($_POST["new_password_confirm"])):
     $login_error = false;
 
     if(!$config["password_verify"]($_POST["password"], $me->info["password"])) $login_error = "error";
@@ -16,7 +16,7 @@
 
     header("location: /".($login_error?("password?msg=".$login_error):"settings?msg=password"));
     exit;
-  }
+  endif;
 
   $messages = array(
     "error" => array(
@@ -43,21 +43,21 @@
     </a>
   </div>
 
-<?PHP if(isset($_GET["msg"]) && isset($messages[$_GET["msg"]])) { ?>
+<?PHP if(isset($_GET["msg"]) && isset($messages[$_GET["msg"]])): ?>
   <div class="alert alert-<?=$messages[$_GET["msg"]][0];?> alert-dismissible fade show card-main" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     <?=$messages[$_GET["msg"]][1];?>
   </div>
-<?PHP } ?>
-<?PHP if($me->info["password_temp"]){ ?>
+<?PHP endif; ?>
+<?PHP if($me->info["password_temp"]): ?>
   <div class="card card-main">
     <div class="card-body text-sm">
       You are currently using a temporary password. Please choose a new password before proceeding.
     </div>
   </div>
-<?PHP } ?>
+<?PHP endif; ?>
   <div class="card card-main">
     <div class="card-body">
       <form method="POST" action="/password">

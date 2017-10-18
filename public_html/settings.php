@@ -10,30 +10,30 @@
   $stripe = $me->stripe();
 
   $view_card = false;
-  if(isset($_GET["view"]) && isset($_GET["id"])){
-    if($_GET["view"] == "card"){
+  if(isset($_GET["view"]) && isset($_GET["id"])):
+    if($_GET["view"] == "card"):
       $view_card = "error";
       foreach($cards as $item):
-        if($item["id"] == $_GET["id"]) {
+        if($item["id"] == $_GET["id"]):
           $view_card = true;
           $card = $item;
 
-          if(isset($_POST["action"]) && $item["id"] != $stripe["default_source"]){
-            if($_POST["action"] == "primary") {
+          if(isset($_POST["action"]) && $item["id"] != $stripe["default_source"]):
+            if($_POST["action"] == "primary"):
               $stripe->default_source = $item["id"];
               $stripe->save();
               header("location: /settings?msg=cards.saved");
-            }
-            if($_POST["action"] == "remove") {
+            endif;
+            if($_POST["action"] == "remove"):
               $item->delete();
               header("location: /settings?msg=cards.removed");
-            }
-          }
+            endif;
+          endif;
           break;
-        }
+        endif;
       endforeach;
-    }
-  }
+    endif;
+  endif;
 
   $messages = array(
     "password" => array(
@@ -59,14 +59,14 @@
   );
 
   $app->tmpl("top"); ?>
-<?PHP if(isset($_GET["msg"]) && isset($messages[$_GET["msg"]])) { ?>
+<?PHP if(isset($_GET["msg"]) && isset($messages[$_GET["msg"]])): ?>
   <div class="alert alert-<?=$messages[$_GET["msg"]][0];?> alert-dismissible fade show card-main" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     <?=$messages[$_GET["msg"]][1];?>
   </div>
-<?PHP } ?>
+<?PHP endif; ?>
 
 <?PHP if($view_card === true): ?>
 

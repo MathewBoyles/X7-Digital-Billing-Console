@@ -13,7 +13,7 @@
     if($_GET["id"]):
       $view_subscription = "error";
       foreach($subscriptions as $item):
-        if($item["id"] == $_GET["id"]) {
+        if($item["id"] == $_GET["id"]):
           $view_subscription = true;
           $subscription = $item;
           $invoices = $me->invoices(array(
@@ -27,18 +27,18 @@
           endforeach;
           $original_price = $total_price;
 
-          if($item["discount"]) {
-            if($item["discount"]["coupon"]["valid"]) {
+          if($item["discount"]):
+            if($item["discount"]["coupon"]["valid"]):
               $discounted += $item["discount"]["coupon"]["amount_off"];
               $discounted += ($total_price/100) * $item["discount"]["coupon"]["percent_off"];
-            }
-          }
+            endif;
+          endif;
 
           $total_price -= $discounted;
           if($total_price < 0) $total_price = 0;
 
           break;
-        }
+        endif;
       endforeach;
     endif;
   endif;

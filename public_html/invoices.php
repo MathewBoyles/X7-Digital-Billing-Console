@@ -31,6 +31,10 @@
   $app->tmpl("top"); ?>
 
 <?PHP if($view_invoice === true) : ?>
+  <div class="d-print-none back-top">
+    <a href="/invoices"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to invoices</a>
+  </div>
+
   <div class="card card-main">
     <div class="card-header card-more">Invoice (#<?=$invoice["id"];?>) <span class="btn btn-<?=$invoice["paid"]?"success":"danger";?> btn-sm pull-right"><?=$invoice["paid"]?"PAID":"UNPAID";?></span></div>
     <div class="card-body">

@@ -73,6 +73,10 @@
 <?PHP endif; ?>
 
 <?PHP if($view_payment === true): ?>
+  <div class="d-print-none back-top">
+    <a href="/payments"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to payments</a>
+  </div>
+
   <div class="card card-main">
     <div class="card-header card-more"><?=$payment["title"];?> (#PEND-<?=$payment["id"];?>) <span class="btn btn-<?=$payment["paid"]?"success":"danger";?> btn-sm pull-right"><?=$payment["paid"]?"PAID":"UNPAID";?></span></div>
     <div class="card-body">

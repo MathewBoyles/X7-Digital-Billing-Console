@@ -46,6 +46,10 @@
   $app->tmpl("top"); ?>
 
 <?PHP if($view_subscription === true): ?>
+  <div class="d-print-none back-top">
+    <a href="/subscriptions"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to subscriptions</a>
+  </div>
+
   <div class="card card-main">
     <div class="card-header">Subscription Details</div>
     <div class="card-body">

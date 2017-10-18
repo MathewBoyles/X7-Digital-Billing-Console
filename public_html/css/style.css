@@ -35,6 +35,8 @@ x7-data {
         position: fixed; } }
   #page main {
     min-height: calc(100vh - 61px); }
+    #page main .back-top {
+      margin-bottom: 10px; }
     #page main .card-main {
       box-shadow: 0 7px 14px 0 rgba(50, 50, 93, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
       margin-bottom: 15px; }
